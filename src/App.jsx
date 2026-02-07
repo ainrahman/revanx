@@ -1,209 +1,290 @@
 import { useState, useEffect } from 'react'
-import { ArrowDown, Globe, Shield, Terminal, Radar, Target, Zap, LayoutGrid, Car, Database, Smartphone, Check } from 'lucide-react'
+import { ArrowRight, Shield, Zap, LayoutGrid, Car, Database, Smartphone, Check, Lock, Globe, ChevronDown, Menu, X } from 'lucide-react'
 import './index.css'
 
 function App() {
   const [scrolled, setScrolled] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50)
-    }
+    const handleScroll = () => setScrolled(window.scrollY > 20)
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const scrollTo = (id) => {
+    setMobileMenuOpen(false)
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+  }
+
   return (
-    <div className="bg-[#050505] text-white min-h-screen font-sans selection:bg-neon-green selection:text-black">
+    <div className="bg-dark-bg text-white min-h-screen font-sans selection:bg-neon-green selection:text-black overflow-x-hidden">
       
-      {/* NAV */}
-      <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-black/80 backdrop-blur-md border-b border-white/10 py-4' : 'bg-transparent py-6'}`}>
+      {/* NAVIGATION */}
+      <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-black/90 backdrop-blur-md border-b border-white/10 py-3' : 'bg-transparent py-6'}`}>
         <div className="container mx-auto px-6 flex justify-between items-center">
-          <div className="text-xl font-bold tracking-tighter flex items-center gap-2">
-            <Radar className="text-neon-green animate-pulse-slow" size={24} />
-            <span>REVANX <span className="text-neon-green">TACTICAL</span></span>
+          <div className="text-2xl font-black tracking-tighter flex items-center gap-2">
+            <span className="text-neon-green">///</span> REVANX
           </div>
+          
+          {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-400">
-            <a href="#features" className="hover:text-white transition-colors">CAPABILITIES</a>
-            <a href="#armory" className="hover:text-white transition-colors">ARMORY</a>
-            <a href="#manifesto" className="hover:text-white transition-colors">MANIFESTO</a>
+            <button onClick={() => scrollTo('features')} className="hover:text-white transition-colors">Features</button>
+            <button onClick={() => scrollTo('enterprise')} className="hover:text-white transition-colors">Enterprise</button>
+            <button onClick={() => scrollTo('security')} className="hover:text-white transition-colors">Security</button>
+            <a href="/login" className="text-white hover:text-neon-green transition-colors">Login</a>
+            <button className="bg-white text-black px-5 py-2 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-neon-green transition-colors">
+              Get Started
+            </button>
           </div>
-          <button className="bg-neon-green text-black px-5 py-2 text-xs font-bold uppercase tracking-widest hover:bg-white transition-colors">
-            ACCESS TERMINAL
+
+          {/* Mobile Toggle */}
+          <button className="md:hidden text-white" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+            {mobileMenuOpen ? <X /> : <Menu />}
           </button>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden absolute top-full left-0 w-full bg-black border-b border-white/10 p-6 flex flex-col gap-6 text-center">
+             <button onClick={() => scrollTo('features')} className="text-gray-400 hover:text-white">Features</button>
+             <button onClick={() => scrollTo('enterprise')} className="text-gray-400 hover:text-white">Enterprise</button>
+             <button onClick={() => scrollTo('security')} className="text-gray-400 hover:text-white">Security</button>
+             <button className="bg-neon-green text-black py-3 rounded font-bold uppercase">Get Started</button>
+          </div>
+        )}
       </nav>
 
       {/* HERO SECTION */}
-      <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-        {/* Abstract Background Elements */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-neon-green/5 rounded-full blur-3xl animate-pulse-slow pointer-events-none"></div>
-        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10 pointer-events-none"></div>
-
+      <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+        {/* Background Gradients */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-neon-green/10 rounded-[100%] blur-[120px] pointer-events-none opacity-50"></div>
+        
         <div className="container mx-auto px-6 relative z-10 text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-sm">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-8 backdrop-blur-sm animate-fade-in-up">
             <span className="w-2 h-2 rounded-full bg-neon-green animate-pulse"></span>
-            <span className="text-[10px] uppercase tracking-widest text-gray-400 font-mono">SYSTEM ONLINE v1.0</span>
+            <span className="text-[10px] uppercase tracking-widest text-gray-300 font-mono">AI-POWERED REAL ESTATE CRM</span>
           </div>
           
-          <h1 className="text-5xl md:text-8xl font-black tracking-tighter mb-6 leading-tight">
-            ORDER FROM <br/>
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">CHAOS.</span>
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-8 leading-[1.1]">
+            Close More Deals.<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">Automate the Chaos.</span>
           </h1>
           
-          <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-            The Field Commander's Bible. We don't sell AI. We sell <strong className="text-white">Cognitive Bandwidth.</strong> 
-            Stripped bloat. No complex avatars. Just raw, high-speed lead logistics.
+          <p className="text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 leading-relaxed font-light">
+            Revanx is the intelligent operating system for modern brokerages. 
+            Unified communication, behavior-based lead scoring, and automated workflows.
           </p>
           
           <div className="flex flex-col md:flex-row items-center justify-center gap-4">
-            <button className="w-full md:w-auto bg-neon-green text-black px-8 py-4 font-bold uppercase tracking-widest hover:bg-white transition-colors flex items-center justify-center gap-2">
-              <Terminal size={18} /> INITIALIZE DEMO
+            <button className="w-full md:w-auto bg-neon-green text-black px-8 py-4 rounded-full font-bold text-sm uppercase tracking-widest hover:bg-white hover:scale-105 transition-all shadow-[0_0_20px_rgba(57,255,20,0.3)]">
+              Start Free Trial
             </button>
-            <button className="w-full md:w-auto px-8 py-4 border border-white/10 text-white font-bold uppercase tracking-widest hover:bg-white/5 transition-colors flex items-center justify-center gap-2">
-              READ MANIFESTO
+            <button className="w-full md:w-auto px-8 py-4 rounded-full border border-white/10 text-white font-bold text-sm uppercase tracking-widest hover:bg-white/5 transition-colors flex items-center justify-center gap-2">
+              View Demo <ArrowRight size={16} />
             </button>
           </div>
-        </div>
 
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-gray-500">
-          <ArrowDown size={24} />
-        </div>
-      </section>
-
-      {/* PROBLEM / AGITATION */}
-      <section className="py-24 bg-[#080808] border-y border-white/5">
-        <div className="container mx-auto px-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6">CHAOS IS THE ENEMY.</h2>
-              <p className="text-gray-400 mb-6 leading-relaxed">
-                Buried in spreadsheets? Missing calls while showing homes? Losing hot leads to slow responses?
-                The old way is costing you commissions.
-              </p>
-              <ul className="space-y-4">
-                <li className="flex items-start gap-3">
-                  <div className="mt-1 text-red-500"><Shield size={16} /></div>
-                  <span className="text-gray-300">Leads slipping through cracks in WhatsApp & Email.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="mt-1 text-red-500"><Shield size={16} /></div>
-                  <span className="text-gray-300">Manual follow-ups wasting 4+ hours daily.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="mt-1 text-red-500"><Shield size={16} /></div>
-                  <span className="text-gray-300">No clear view of who is ready to buy NOW.</span>
-                </li>
-              </ul>
-            </div>
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-neon-green/20 to-transparent blur-3xl opacity-20"></div>
-              <div className="bg-black/50 border border-white/10 p-8 rounded-lg relative z-10 backdrop-blur-sm">
-                <div className="flex justify-between items-center mb-8 border-b border-white/5 pb-4">
-                  <span className="text-xs font-mono text-gray-500">SYSTEM STATUS</span>
-                  <span className="text-xs font-mono text-red-500 animate-pulse">CRITICAL OVERLOAD</span>
-                </div>
-                <div className="space-y-3 font-mono text-sm text-gray-400">
-                  <div className="flex justify-between"><span>Unread Messages</span><span className="text-white">428</span></div>
-                  <div className="flex justify-between"><span>Missed Calls</span><span className="text-white">12</span></div>
-                  <div className="flex justify-between"><span>Follow-ups Due</span><span className="text-white">57</span></div>
-                  <div className="h-1 w-full bg-gray-800 rounded-full mt-2 overflow-hidden">
-                    <div className="h-full bg-red-500 w-[90%]"></div>
-                  </div>
-                </div>
+          {/* DASHBOARD PREVIEW */}
+          <div className="mt-20 relative mx-auto max-w-5xl">
+            <div className="absolute inset-0 bg-neon-green/20 blur-3xl -z-10 rounded-full opacity-20"></div>
+            <div className="bg-[#0A0A0A] border border-white/10 rounded-xl overflow-hidden shadow-2xl">
+              <div className="h-8 bg-[#111] border-b border-white/5 flex items-center px-4 gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500/20"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-500/20"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500/20"></div>
+              </div>
+              <div className="p-8 aspect-video flex items-center justify-center bg-[url('https://placehold.co/1200x800/111/333?text=Revanx+Dashboard+Preview')] bg-cover bg-center">
+                 {/* Placeholder for actual dashboard screenshot */}
+                 <div className="text-center">
+                    <p className="text-gray-500 font-mono text-sm">INTERACTIVE DASHBOARD PREVIEW</p>
+                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CORE FEATURES (THE WEAPONS) */}
+      {/* PARTNERS / TRUST */}
+      <section className="py-10 border-y border-white/5 bg-black/50">
+        <div className="container mx-auto px-6 text-center">
+          <p className="text-xs font-mono text-gray-600 uppercase tracking-widest mb-8">Trusted by Forward-Thinking Brokerages</p>
+          <div className="flex flex-wrap justify-center gap-12 opacity-30 grayscale hover:grayscale-0 transition-all duration-500">
+            {/* Logos would go here */}
+            <span className="text-xl font-bold">ZILLOW</span>
+            <span className="text-xl font-bold">RE/MAX</span>
+            <span className="text-xl font-bold">KELLER WILLIAMS</span>
+            <span className="text-xl font-bold">EXP REALTY</span>
+            <span className="text-xl font-bold">CENTURY 21</span>
+          </div>
+        </div>
+      </section>
+
+      {/* FEATURES GRID */}
       <section id="features" className="py-24 relative">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-4">TACTICAL ADVANTAGE</h2>
-            <p className="text-gray-400">Deploying advanced countermeasures.</p>
+          <div className="mb-16 md:flex justify-between items-end border-b border-white/10 pb-8">
+            <div>
+              <h2 className="text-3xl md:text-5xl font-bold mb-4">Intelligent Infrastructure</h2>
+              <p className="text-gray-400 max-w-xl">
+                Built for speed. Designed for closure. Revanx replaces your fragmented toolset with one cohesive power center.
+              </p>
+            </div>
+            <div className="hidden md:block">
+              <button className="text-neon-green font-mono text-xs uppercase flex items-center gap-2 hover:gap-4 transition-all">
+                Explore All Features <ArrowRight size={14} />
+              </button>
+            </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <FeatureCard 
               icon={<LayoutGrid className="text-neon-green" />}
-              title="Central Command"
-              desc="Unified dashboard. WhatsApp, Email, SMS. One screen to rule them all."
+              title="Unified Command Center"
+              desc="WhatsApp, Email, and SMS in one stream. Never toggle between apps again. See every conversation history in context."
             />
             <FeatureCard 
-              icon={<Zap className="text-yellow-400" />}
-              title="AI Quick Strike"
-              desc="AI drafts replies. You swipe to send. Zero friction response time."
+              icon={<Zap className="text-neon-green" />}
+              title="AI Quick-Response"
+              desc="Our AI drafts context-aware replies instantly. You review and swipe to send. Reduce response time by 90%."
             />
             <FeatureCard 
-              icon={<Target className="text-blue-400" />}
-              title="Smart Recon"
-              desc="Auto-scoring leads based on behavior. Know exactly who to call first."
+              icon={<Database className="text-neon-green" />}
+              title="Smart Lead Scoring"
+              desc="Stop guessing who to call. Revanx analyzes behavior and ranks leads by 'Hotness', so you focus on ready buyers."
             />
             <FeatureCard 
-              icon={<Car className="text-red-400" />}
+              icon={<Car className="text-neon-green" />}
               title="Drive Mode"
-              desc="Hands-free voice ops. 'Hey Revanx, log that showing.' Eyes on the road."
+              desc="A voice-first interface designed for the road. 'Hey Revanx, log a showing for 123 Main St'. Hands-free productivity."
+            />
+            <FeatureCard 
+              icon={<Globe className="text-neon-green" />}
+              title="Full Email Sync"
+              desc="Bi-directional sync with Gmail and Outlook. Turn your inbox into a deal pipeline automatically."
+            />
+             <FeatureCard 
+              icon={<Smartphone className="text-neon-green" />}
+              title="Mobile Native"
+              desc="The full power of the desktop dashboard, optimized for your pocket. Manage your empire from anywhere."
             />
           </div>
         </div>
       </section>
 
-      {/* THE ARMORY (LATENT CAPABILITIES) */}
-      <section id="armory" className="py-24 bg-[#080808] border-y border-white/5">
+      {/* ENTERPRISE / ARMORY */}
+      <section id="enterprise" className="py-24 bg-[#080808] border-y border-white/5">
         <div className="container mx-auto px-6">
-          <div className="flex items-center gap-4 mb-12">
-             <Shield className="text-gray-500" size={32} />
-             <div>
-               <h2 className="text-3xl font-bold">THE ARMORY</h2>
-               <p className="text-sm text-gray-500 font-mono">LATENT CAPABILITIES [CLASSIFIED]</p>
-             </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <ArmoryCard title="Agency Analytics" status="READY" desc="Cash flow forecasting & Commission pipelines." />
-            <ArmoryCard title="Compliance Shield" status="READY" desc="Quiet Hours & DNC enforcement." />
-            <ArmoryCard title="Viral Engine" status="READY" desc="Auto-generates Luxury Social Cards." />
-            <ArmoryCard title="Dashboard Copilot" status="R&D" desc="Context-aware AI Agent assistant." />
-            <ArmoryCard title="Full Email Sync" status="READY" desc="Bi-directional Gmail/Outlook integration." />
-            <ArmoryCard title="Data Intel" status="READY" desc="Deduplication & Competitor Watch." />
-          </div>
-        </div>
-      </section>
-
-      {/* MANIFESTO / MARKETING */}
-      <section id="manifesto" className="py-24 relative overflow-hidden">
-        <div className="absolute inset-0 bg-neon-green/5 skew-y-3 transform origin-top-left pointer-events-none"></div>
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-4xl mx-auto bg-black/80 border border-white/10 p-12 backdrop-blur-md rounded-xl">
-            <h3 className="text-xs font-bold uppercase tracking-widest text-gray-500 mb-6">AESTHETIC DOCTRINE</h3>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">TACTICAL LUXURY.</h2>
-            <p className="text-xl text-gray-400 leading-relaxed mb-8">
-              Not Silicon Valley Minimalist. <span className="text-neon-green">High-End Military Industrial.</span> 
-              Dark Glass. Neon Accents. Monospace. Special Ops meets Penthouse Suite.
-            </p>
-            <div className="flex flex-wrap gap-4">
-               <Badge text="DARK MODE" color="bg-black border-gray-700" />
-               <Badge text="NEON ACCENTS" color="bg-neon-green/20 border-neon-green text-neon-green" />
-               <Badge text="GLASSMORPHISM" color="bg-white/5 border-white/10 text-white" />
+          <div className="flex flex-col md:flex-row gap-16 items-center">
+            <div className="flex-1">
+              <div className="inline-block bg-blue-500/10 text-blue-400 border border-blue-500/20 px-3 py-1 rounded text-xs font-bold uppercase tracking-widest mb-6">
+                Enterprise Grade
+              </div>
+              <h2 className="text-3xl md:text-5xl font-bold mb-6">The Armory for Brokerages.</h2>
+              <p className="text-gray-400 leading-relaxed mb-8">
+                Scale your agency with tools designed for high-volume teams. Revanx provides the oversight, compliance, and analytics needed to grow.
+              </p>
+              
+              <div className="space-y-6">
+                <ListItem title="Agency Analytics" desc="Cash flow forecasting and real-time commission pipelines." />
+                <ListItem title="Compliance Shield" desc="Automated 'Quiet Hours' enforcement and DNC list filtering." />
+                <ListItem title="Viral Engine" desc="Auto-generate luxury social media assets for every new listing." />
+                <ListItem title="Data Deduplication" desc="AI-powered cleaning for messy imported CRM data." />
+              </div>
+            </div>
+            <div className="flex-1 w-full relative">
+               <div className="absolute inset-0 bg-blue-500/20 blur-[100px] rounded-full opacity-20"></div>
+               <div className="grid grid-cols-2 gap-4">
+                 <div className="bg-black border border-white/10 p-6 rounded-xl aspect-square flex flex-col justify-center items-center text-center">
+                    <h3 className="text-4xl font-bold text-white mb-2">24/7</h3>
+                    <p className="text-xs text-gray-500 font-mono uppercase">Uptime Reliability</p>
+                 </div>
+                 <div className="bg-black border border-white/10 p-6 rounded-xl aspect-square flex flex-col justify-center items-center text-center translate-y-8">
+                    <h3 className="text-4xl font-bold text-neon-green mb-2">100%</h3>
+                    <p className="text-xs text-gray-500 font-mono uppercase">Data Ownership</p>
+                 </div>
+                 <div className="bg-black border border-white/10 p-6 rounded-xl aspect-square flex flex-col justify-center items-center text-center">
+                    <h3 className="text-4xl font-bold text-blue-400 mb-2">GDPR</h3>
+                    <p className="text-xs text-gray-500 font-mono uppercase">Compliance Ready</p>
+                 </div>
+                 <div className="bg-black border border-white/10 p-6 rounded-xl aspect-square flex flex-col justify-center items-center text-center translate-y-8">
+                    <h3 className="text-4xl font-bold text-white mb-2">AES-256</h3>
+                    <p className="text-xs text-gray-500 font-mono uppercase">Encryption Standard</p>
+                 </div>
+               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="py-12 border-t border-white/10 bg-black text-center">
-        <div className="container mx-auto px-6">
-          <div className="flex items-center justify-center gap-2 mb-6">
-            <Radar className="text-gray-600" size={20} />
-            <span className="font-bold tracking-widest text-gray-500">REVANX</span>
+      {/* SECURITY / PRIVACY */}
+      <section id="security" className="py-24">
+        <div className="container mx-auto px-6 text-center max-w-3xl">
+          <Shield size={48} className="mx-auto text-gray-600 mb-6" />
+          <h2 className="text-3xl font-bold mb-6">Your Data is Sacred.</h2>
+          <p className="text-gray-400 mb-8 leading-relaxed">
+            We understand that your client list is your livelihood. Revanx is built with a security-first architecture. 
+            We do not sell your data. We do not train public models on your private conversations.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <span className="bg-white/5 px-4 py-2 rounded-full text-xs font-mono text-gray-300 flex items-center gap-2">
+              <Lock size={12} /> END-TO-END ENCRYPTION
+            </span>
+            <span className="bg-white/5 px-4 py-2 rounded-full text-xs font-mono text-gray-300 flex items-center gap-2">
+              <Shield size={12} /> SOC-2 COMPLIANT INFRASTRUCTURE
+            </span>
           </div>
-          <p className="text-gray-600 text-sm mb-8">© 2026 Bun Bun Labs. All Rights Reserved.</p>
-          <div className="flex justify-center gap-6 text-sm text-gray-500">
-            <a href="#" className="hover:text-white transition-colors">Privacy Protocol</a>
-            <a href="#" className="hover:text-white transition-colors">Terms of Engagement</a>
-            <a href="#" className="hover:text-white transition-colors">Contact HQ</a>
+        </div>
+      </section>
+
+      {/* CTA FOOTER */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-neon-green/10"></div>
+        <div className="container mx-auto px-6 relative z-10 text-center">
+          <h2 className="text-4xl md:text-6xl font-bold mb-8 text-white">Ready to Upgrade?</h2>
+          <p className="text-xl text-gray-400 mb-10">Join the waitlist for Revanx Enterprise.</p>
+          <div className="flex flex-col md:flex-row justify-center gap-4 max-w-md mx-auto">
+            <input type="email" placeholder="Enter your work email" className="bg-black/50 border border-white/20 rounded px-6 py-4 text-white focus:outline-none focus:border-neon-green w-full" />
+            <button className="bg-neon-green text-black font-bold uppercase tracking-widest px-8 py-4 rounded hover:bg-white transition-colors whitespace-nowrap">
+              Request Access
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="bg-black py-12 border-t border-white/10 text-sm">
+        <div className="container mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div>
+            <div className="text-xl font-black mb-4 flex items-center gap-2">
+              <span className="text-neon-green">///</span> REVANX
+            </div>
+            <p className="text-gray-600">
+              © 2026 Bun Bun Labs.<br/>All rights reserved.
+            </p>
+          </div>
+          <div>
+            <h4 className="font-bold text-white mb-4">Product</h4>
+            <ul className="space-y-2 text-gray-500">
+              <li><a href="#" className="hover:text-neon-green transition-colors">Features</a></li>
+              <li><a href="#" className="hover:text-neon-green transition-colors">Enterprise</a></li>
+              <li><a href="#" className="hover:text-neon-green transition-colors">Pricing</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-bold text-white mb-4">Company</h4>
+            <ul className="space-y-2 text-gray-500">
+              <li><a href="#" className="hover:text-neon-green transition-colors">About Us</a></li>
+              <li><a href="#" className="hover:text-neon-green transition-colors">Contact</a></li>
+              <li><a href="#" className="hover:text-neon-green transition-colors">Careers</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="font-bold text-white mb-4">Legal</h4>
+            <ul className="space-y-2 text-gray-500">
+              <li><a href="/privacy" className="hover:text-neon-green transition-colors">Privacy Policy</a></li>
+              <li><a href="/terms" className="hover:text-neon-green transition-colors">Terms of Service</a></li>
+            </ul>
           </div>
         </div>
       </footer>
@@ -214,35 +295,27 @@ function App() {
 
 function FeatureCard({ icon, title, desc }) {
   return (
-    <div className="bg-[#0A0A0A] border border-white/5 p-8 rounded-lg group hover:border-neon-green/30 transition-all duration-300 hover:-translate-y-1">
-      <div className="mb-6 p-3 bg-black border border-white/10 w-fit rounded-lg group-hover:border-neon-green/50 transition-colors">
+    <div className="bg-[#0F0F0F] border border-white/5 p-8 rounded-2xl hover:border-neon-green/30 transition-all duration-300 hover:-translate-y-1 group">
+      <div className="mb-6 w-12 h-12 bg-black rounded-lg flex items-center justify-center text-gray-400 group-hover:text-neon-green group-hover:scale-110 transition-all">
         {icon}
       </div>
-      <h3 className="text-xl font-bold mb-3 group-hover:text-white transition-colors">{title}</h3>
-      <p className="text-gray-400 text-sm leading-relaxed">{desc}</p>
+      <h3 className="text-xl font-bold mb-3 text-white">{title}</h3>
+      <p className="text-gray-400 leading-relaxed text-sm">{desc}</p>
     </div>
   )
 }
 
-function ArmoryCard({ title, status, desc }) {
+function ListItem({ title, desc }) {
   return (
-    <div className="bg-white/5 border border-white/5 p-6 rounded hover:bg-white/10 transition-colors cursor-default">
-      <div className="flex justify-between items-center mb-3">
-        <h4 className="font-bold text-white">{title}</h4>
-        <span className={`text-[10px] font-mono px-2 py-1 rounded ${status === 'READY' ? 'bg-neon-green/10 text-neon-green' : 'bg-purple-500/10 text-purple-400'}`}>
-          {status}
-        </span>
+    <div className="flex items-start gap-4">
+      <div className="mt-1 bg-neon-green/10 p-1 rounded">
+        <Check size={14} className="text-neon-green" />
       </div>
-      <p className="text-xs text-gray-400">{desc}</p>
+      <div>
+        <h4 className="font-bold text-white text-sm">{title}</h4>
+        <p className="text-gray-500 text-sm">{desc}</p>
+      </div>
     </div>
-  )
-}
-
-function Badge({ text, color }) {
-  return (
-    <span className={`px-4 py-2 rounded text-xs font-bold uppercase tracking-widest border ${color}`}>
-      {text}
-    </span>
   )
 }
 
