@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  --color-neon-green: #39FF14;
+  --color-neon-yellow: #FFFF00;
+  --color-dark-bg: #050505;
+  --color-glass: rgba(255, 255, 255, 0.05);
+
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "Space Grotesque", monospace;
+
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@layer base {
+  body {
+    @apply bg-dark-bg text-white font-sans;
+  }
+}
